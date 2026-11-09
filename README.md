@@ -10,7 +10,7 @@ Dependency: github.com/ClickHouse/clickhouse-go/v2 (wired in by the driver itsel
 gtr add github:shibisty/orm.go github:shibisty/orm.go-clickhouse-driver
 ```
 
-`orm` is a peer dependency (`^0.1.1`): the application adds it, so all its drivers share one core.
+`orm` is a peer dependency (`>=0.1.1 <0.3`): the application adds it, so all its drivers share one core.
 
 ## Usage
 

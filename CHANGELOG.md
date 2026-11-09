@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-## 0.1.1 — 2026-11-09
+### Changed
+- Works with `orm` 0.1 and 0.2 (peer dependency `>=0.1.1 <0.3`).
 
 ### Added
 - The ClickHouse driver: `clickhouse.Open(dsn)`, `clickhouse.Driver(dsn)`, `clickhouse.OpenDB(db)`.

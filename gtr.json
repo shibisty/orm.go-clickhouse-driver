@@ -14,7 +14,7 @@
         "orm": "github:shibisty/orm.go"
     },
     "peerDependencies": {
-        "orm": "^0.1.1"
+        "orm": ">=0.1.1 <0.3"
     },
     "scripts": {
         "test": "go test ./...",
