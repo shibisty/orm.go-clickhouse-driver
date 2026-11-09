@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.1 — 2026-11-09
+
 ### Added
 - The ClickHouse driver: `clickhouse.Open(dsn)`, `clickhouse.Driver(dsn)`, `clickhouse.OpenDB(db)`.
   DML through mutations (`ALTER TABLE … UPDATE`, lightweight `DELETE`, `mutations_sync=2`),
