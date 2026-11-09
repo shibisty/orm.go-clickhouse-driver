@@ -1,0 +1,234 @@
+-- create boolean
+CREATE TABLE `t` (
+  `c` Bool DEFAULT true
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create char
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create string
+CREATE TABLE `t` (
+  `c` String DEFAULT 'x'
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create text
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create mediumText
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create longText
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create tinyText
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create tinyInteger
+CREATE TABLE `t` (
+  `c` Int8
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create smallInteger
+CREATE TABLE `t` (
+  `c` Int16
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create mediumInteger
+CREATE TABLE `t` (
+  `c` Int32
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create integer
+CREATE TABLE `t` (
+  `c` Int32 DEFAULT 0
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create bigInteger
+CREATE TABLE `t` (
+  `c` Int64
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create unsignedInteger
+CREATE TABLE `t` (
+  `c` UInt32
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create increments
+CREATE TABLE `t` (
+  `c` Int64
+) ENGINE = MergeTree ORDER BY (`c`);
+
+-- create id
+CREATE TABLE `t` (
+  `id` Int64
+) ENGINE = MergeTree ORDER BY (`id`);
+
+-- create decimal
+CREATE TABLE `t` (
+  `c` Decimal(10, 2)
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create double
+CREATE TABLE `t` (
+  `c` Float64
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create float
+CREATE TABLE `t` (
+  `c` Float64
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create date
+CREATE TABLE `t` (
+  `c` Date32
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create dateTime
+CREATE TABLE `t` (
+  `c` DateTime64(3)
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create dateTimeTz
+CREATE TABLE `t` (
+  `c` DateTime64(0, 'UTC')
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create time
+ERROR: schema: column "c": clickhouse: time column "c": older servers have no Time type; store seconds in an integer or a DateTime
+
+-- create timestamp
+CREATE TABLE `t` (
+  `c` DateTime DEFAULT now()
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create timestampTz
+CREATE TABLE `t` (
+  `c` Nullable(DateTime64(0, 'UTC'))
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create year
+CREATE TABLE `t` (
+  `c` UInt16
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create binary
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create json
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create jsonb
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create uuid
+CREATE TABLE `t` (
+  `c` UUID
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create ulid
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create enum
+CREATE TABLE `t` (
+  `c` Enum8('a' = 1, 'b' = 2)
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create set
+CREATE TABLE `t` (
+  `c` Array(LowCardinality(String))
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create macAddress
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create ipAddress
+CREATE TABLE `t` (
+  `c` String
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create geometry
+ERROR: schema: column "c": clickhouse: spatial column "c" is not supported; use Point/Polygon through raw SQL
+
+-- create vector
+CREATE TABLE `t` (
+  `c` Array(Float32)
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create comment
+CREATE TABLE `t` (
+  `c` String COMMENT 'it\'s'
+) ENGINE = MergeTree ORDER BY tuple();
+
+-- create foreign key
+ERROR: clickhouse: foreign key on "user_id": ClickHouse has no unique constraints or foreign keys
+
+-- create indexes
+ERROR: clickhouse: unique index "t_a_b_unique": ClickHouse has no unique constraints or foreign keys
+
+-- create unique column
+ERROR: schema: column "c": clickhouse: unique column "c": ClickHouse has no unique constraints or foreign keys
+
+-- create skipping indexes
+CREATE TABLE `t` (
+  `id` Int64,
+  `a` String,
+  `at` DateTime,
+  INDEX `t_a_index` (`a`) TYPE bloom_filter GRANULARITY 1,
+  INDEX `t_at_index` (`at`) TYPE minmax GRANULARITY 1
+) ENGINE = MergeTree ORDER BY (`id`);
+
+-- create table options
+CREATE TABLE `t` (
+  `id` Int64,
+  `at` DateTime DEFAULT now()
+) ENGINE = ReplacingMergeTree(at) ORDER BY (id, at) PARTITION BY toYYYYMM(at) TTL at + INTERVAL 30 DAY SETTINGS index_granularity = 4096;
+
+-- create no primary key
+CREATE TABLE `t` (
+  `line` String
+) ENGINE = Log;
+
+-- create nullable array
+ERROR: schema: column "c": clickhouse: column "c": an Array cannot be Nullable; use an empty array
+
+-- alter add, drop, rename
+ALTER TABLE `t` ADD COLUMN `nick` Nullable(String);
+ALTER TABLE `t` DROP COLUMN `old`;
+ALTER TABLE `t` RENAME COLUMN `a` TO `b`;
+
+-- alter change column
+ALTER TABLE `t` MODIFY COLUMN `nick` String;
+
+-- alter indexes
+ALTER TABLE `t` ADD INDEX `t_nick_index` (`nick`) TYPE set(100) GRANULARITY 1;
+ALTER TABLE `t` DROP INDEX `t_old_index`;
+
+-- alter unique
+ERROR: schema: unique index "t_email_unique": clickhouse: unique index "t_email_unique": ClickHouse has no unique constraints or foreign keys
+
+-- alter foreign key
+ERROR: schema: foreign key "t_team_id_foreign": clickhouse: foreign key on "team_id": ClickHouse has no unique constraints or foreign keys
+
+-- alter drop foreign key
+ERROR: schema: dropping foreign key "t_company_id_foreign": clickhouse: ClickHouse has no unique constraints or foreign keys
+

@@ -1,0 +1,23 @@
+{
+    "$schema": "https://raw.githubusercontent.com/shibisty/gtr/main/schema/gtr.schema.json",
+    "name": "orm-clickhouse",
+    "version": "0.1.0",
+    "license": "MIT",
+    "repository": "github:shibisty/orm.go-clickhouse-driver",
+    "engines": {
+        "go": ">=1.24"
+    },
+    "dependencies": {
+        "github.com/ClickHouse/clickhouse-go/v2": "~2.40.3"
+    },
+    "devDependencies": {
+        "orm": "github:shibisty/orm.go"
+    },
+    "peerDependencies": {
+        "orm": "^0.1.1"
+    },
+    "scripts": {
+        "test": "go test ./...",
+        "test:integration": "go test -tags integration ./..."
+    }
+}
