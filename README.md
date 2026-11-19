@@ -1,4 +1,4 @@
-# orm-clickhouse
+# @orm/clickhouse
 
 ClickHouse driver for [`orm`](https://github.com/shibisty/orm.go). Go package: `clickhouse`.
 
@@ -7,7 +7,7 @@ Dependency: github.com/ClickHouse/clickhouse-go/v2 (wired in by the driver itsel
 ## Installation
 
 ```bash
-gtr add github:shibisty/orm.go github:shibisty/orm.go-clickhouse-driver
+gtr add orm @orm/clickhouse
 ```
 
 `orm` is a peer dependency (`>=0.1.1 <0.3`): the application adds it, so all its drivers share one core.
@@ -17,7 +17,7 @@ gtr add github:shibisty/orm.go github:shibisty/orm.go-clickhouse-driver
 ```go
 import (
     "orm"
-    clickhouse "orm-clickhouse"
+    clickhouse "orm/clickhouse"
     "orm/schema"
 )
 

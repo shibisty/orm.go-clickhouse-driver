@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	clickhouse "orm-clickhouse"
+	clickhouse "orm/clickhouse"
 	"orm/schema"
 )
 

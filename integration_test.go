@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	clickhouse "orm-clickhouse"
+	clickhouse "orm/clickhouse"
 	"orm/drivertest"
 )
 
